@@ -1,0 +1,111 @@
+steps:
+# Build test container
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build test container
+  args:
+  - 'build'
+  - '-t'
+  - 'run-tests'
+  - '-f'
+  - 'Dockerfile.test'
+  - '.'
+
+# Run tests
+- name: 'gcr.io/cloud-builders/docker'
+  id: Test
+  args:
+  - 'run'
+  - 'run-tests'
+
+# This step builds the container image.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build
+  args:
+  - 'build'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/freebail-wedding-api:$SHORT_SHA'
+  - '.'
+
+# This step pushes the image to Container Registry
+# The PROJECT_ID and SHORT_SHA variables are automatically
+# replaced by Cloud Build.
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args:
+  - 'push'
+  - 'gcr.io/$PROJECT_ID/freebail-wedding-api:$SHORT_SHA'
+
+# Decrypt the file containing the key
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Decrypt GitHub key
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=github/id_rsa.enc
+  - --plaintext-file=/root/.ssh/id_rsa
+  - --location=global
+  - --keyring=my-keyring
+  - --key=github-key
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Set up git with key and domain.
+- name: 'gcr.io/cloud-builders/git'
+  id: Configure Git
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    chmod 600 /root/.ssh/id_rsa
+    cat <<EOF >/root/.ssh/config
+    Hostname github.com
+    IdentityFile /root/.ssh/id_rsa
+    EOF
+    mv github/known_hosts /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Clone the freebail-wedding-cd repository
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Clone CD repository
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+    git clone git@github.com:jimbali/freebail-wedding-cd.git && \
+    cd freebail-wedding-cd && \
+    git checkout candidate && \
+    git config user.email ${PROJECT_ID}@cloudbuild.gserviceaccount.com
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# This step generates the new manifest
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Generate manifest
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" k8s/deployment.tpl.yaml | \
+     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > freebail-wedding-cd/k8s/api/deployment.yaml
+
+# This step pushes the manifest back to freebail-wedding-cd
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Push manifest
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+    set -x && \
+    cd freebail-wedding-cd && \
+    git add k8s/api/deployment.yaml && \
+    git commit -m "Deploying image gcr.io/${PROJECT_ID}/freebail-wwedding-api:${SHORT_SHA}
+    Built from commit ${COMMIT_SHA} of repository freebail-wedding-api
+    Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
+    git push origin candidate
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh

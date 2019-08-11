@@ -1,0 +1,20 @@
+FROM ruby:2.6-alpine
+
+RUN apk add --no-cache --update build-base \
+                                linux-headers \
+                                git \
+                                mysql-dev \
+                                nodejs \
+                                tzdata \
+                                ruby-dev
+
+WORKDIR /app
+ADD Gemfile /app
+ADD Gemfile.lock /app
+RUN gem install bundler
+RUN bundle install --without development production
+
+COPY . /app
+EXPOSE 3000
+
+CMD rspec
