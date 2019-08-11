@@ -16,6 +16,8 @@ RUN bundle install --without development production
 RUN rake db:create db:migrate
 
 COPY . /app
+RUN rake db:create db:migrate
+
 EXPOSE 3000
 
 CMD rspec
