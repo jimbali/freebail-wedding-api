@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 describe 'Guests API' do
 
-  path '/guests' do
+  path '/api/guests' do
 
     get 'List guests' do
       tags 'Guests'
