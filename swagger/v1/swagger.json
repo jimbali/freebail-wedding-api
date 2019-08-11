@@ -1,0 +1,35 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/guests": {
+      "get": {
+        "summary": "List guests",
+        "tags": [
+          "Guests"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "guests found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "freebail": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
