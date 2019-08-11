@@ -13,6 +13,7 @@ ADD Gemfile /app
 ADD Gemfile.lock /app
 RUN gem install bundler
 RUN bundle install --without development production
+RUN rake db:create db:migrate
 
 COPY . /app
 EXPOSE 3000
