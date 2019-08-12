@@ -49,6 +49,4 @@ test:
 #
 production:
   <<: *default
-  database: freebail-wedding-api_production
-  username: freebail-wedding-api
-  password: <%= ENV['FREEBAIL-WEDDING-API_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

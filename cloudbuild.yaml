@@ -1,21 +1,27 @@
 steps:
-# Build test container
-- name: 'gcr.io/cloud-builders/docker'
+# Build test containers
+- name: 'gcr.io/$PROJECT_ID/docker-compose'
   id: Build test container
   args:
   - 'build'
-  - '-t'
-  - 'run-tests'
-  - '-f'
-  - 'Dockerfile.test'
-  - '.'
+
+# Create and migrate test DB
+- name: 'gcr.io/$PROJECT_ID/docker-compose'
+  id: Create and migrate test DB
+  args:
+  - 'run'
+  - 'runner'
+  - 'rake'
+  - 'db:create'
+  - 'db:migrate'
 
 # Run tests
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/$PROJECT_ID/docker-compose'
   id: Test
   args:
   - 'run'
-  - 'run-tests'
+  - 'runner'
+  - 'rspec'
 
 # This step builds the container image.
 - name: 'gcr.io/cloud-builders/docker'
