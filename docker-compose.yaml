@@ -8,6 +8,7 @@ services:
     command: rspec
     depends_on:
       - db
+    entrypoint: ["/app/bin/wait_for", "db:3306", "--"]
     environment:
       DATABASE_URL: mysql2://root:aiPhu1duCa2o@db/freebail-wedding-api_test
       RACK_ENV: test
