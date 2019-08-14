@@ -40,8 +40,8 @@ spec:
           name: freebail-wedding-api
           readinessProbe:
             httpGet:
-              path: /health
-              port: 80
+              path: /api/health
+              port: 3000
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
