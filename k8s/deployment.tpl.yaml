@@ -48,7 +48,7 @@ spec:
         - command:
             - /cloud_sql_proxy
             - -instances=freebail-wedding:europe-west2:freebail-wedding=tcp:5432
-            - -credential_file=/secrets/cloudsql/credentials.json"
+            - -credential_file=/secrets/cloudsql/credentials.json
           image: gcr.io/cloudsql-docker/gce-proxy:1.14
           name: cloudsql-proxy
           securityContext:
