@@ -31,6 +31,11 @@ spec:
                   key: url
             - name: RACK_ENV
               value: production
+            - name: RAILS_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rails-master-key
+                  key: key
           image: gcr.io/GOOGLE_CLOUD_PROJECT/freebail-wedding-api:COMMIT_SHA
           name: freebail-wedding-api
           readinessProbe:
