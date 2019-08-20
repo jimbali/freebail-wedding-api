@@ -108,7 +108,7 @@ steps:
     set -x && \
     cd freebail-wedding-cd && \
     git add k8s/api/deployment.yaml && \
-    git commit -m "Deploying image gcr.io/${PROJECT_ID}/freebail-wwedding-api:${SHORT_SHA}
+    git commit -m "Deploying image gcr.io/${PROJECT_ID}/freebail-wedding-api:${SHORT_SHA}
     Built from commit ${COMMIT_SHA} of repository freebail-wedding-api
     Author: $(git log --format='%an <%ae>' -n 1 HEAD)" && \
     git push origin candidate
