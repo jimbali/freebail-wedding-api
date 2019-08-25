@@ -1,0 +1,24 @@
+Metrics/LineLength:
+  Exclude:
+    - 'config/application.rb'
+    - 'config/environments/development.rb'
+    - 'config/environments/production.rb'
+    - 'config/environments/test.rb'
+    - 'config/initializers/backtrace_silencers.rb'
+    - 'config/initializers/cors.rb'
+    - 'config/initializers/rswag_api.rb'
+    - 'config/initializers/wrap_parameters.rb'
+    - 'config/puma.rb'
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+    - 'spec/rails_helper.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/swagger_helper.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/MixinUsage:
+  Exclude:
+    - 'bin/setup'
+    - 'bin/update'
