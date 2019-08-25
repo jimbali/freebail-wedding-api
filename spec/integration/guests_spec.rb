@@ -2,20 +2,28 @@ require 'swagger_helper'
 
 describe 'Guests API' do
 
-  path '/api/guests' do
+  path '/api/guests/{invite_id}' do
 
-    get 'List guests' do
+    get 'Show guest' do
       tags 'Guests'
       produces 'application/json'
+      parameter name: :invite_id, :in => :path, :type => :integer
 
-      response '200', 'guests found' do
+      response '200', 'guest found' do
+        let(:invite_id) { 1 }
+
         schema type: :array,
           items: {
             properties: {
-              freebail: { type: :string }
+              guest: { name: :string }
             }
           }
 
+        run_test!
+      end
+
+      response '404', 'guest not found' do
+        let(:invite_id) { -1 }
         run_test!
       end
     end

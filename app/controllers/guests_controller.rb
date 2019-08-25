@@ -1,5 +1,7 @@
 class GuestsController < ApplicationController
-  def index
+  def show
+    return render status: 404 if params[:invite_id] != '1'
+
     render json: [{ freebail: 'wedding' }]
   end
 end
