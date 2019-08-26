@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,5 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_08_26_114217) do
+
+  create_table "guests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", limit: 75
+    t.integer "priority"
+    t.string "tags", limit: 50
+    t.integer "plus"
+    t.string "allegiance", limit: 15
+    t.string "invited_to", limit: 25
+    t.string "email", limit: 254
+    t.string "invite_code", limit: 10
+    t.string "invite_link", limit: 75
+    t.datetime "invite_sent"
+    t.string "street", limit: 100
+    t.string "town", limit: 25
+    t.string "county", limit: 25
+    t.string "postcode", limit: 10
+    t.string "country", limit: 25
+  end
+
 end
