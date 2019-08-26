@@ -10,20 +10,19 @@ describe 'Guests API' do
       parameter name: :invite_id, in: :path, type: :integer
 
       response '200', 'guest found' do
-        let(:invite_id) { 1 }
+        let!(:guest) { create(:guest) }
+        let(:invite_id) { guest.invite_code }
 
-        schema type: :array,
-               items: {
-                 properties: {
-                   guest: { name: :string }
-                 }
+        schema type: :object,
+               properties: {
+                 guest: { name: :string }
                }
 
         run_test!
       end
 
       response '404', 'guest not found' do
-        let(:invite_id) { -1 }
+        let(:invite_id) { 1 }
         run_test!
       end
     end

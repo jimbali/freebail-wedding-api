@@ -2,8 +2,9 @@
 
 class GuestsController < ApplicationController
   def show
-    return render status: 404 if params[:invite_id] != '1'
+    guest = Guest.find_by(invite_code: params[:invite_id])
+    return render status: :not_found if guest.nil?
 
-    render json: [{ freebail: 'wedding' }]
+    render json: { guest: guest }
   end
 end
