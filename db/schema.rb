@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_26_114217) do
+ActiveRecord::Schema.define(version: 2019_08_26_172532) do
 
   create_table "guests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 75
     t.integer "priority"
     t.string "tags", limit: 50
-    t.integer "plus"
     t.string "allegiance", limit: 15
     t.string "invited_to", limit: 25
     t.string "email", limit: 254
@@ -28,6 +27,7 @@ ActiveRecord::Schema.define(version: 2019_08_26_114217) do
     t.string "county", limit: 25
     t.string "postcode", limit: 10
     t.string "country", limit: 25
+    t.integer "count", default: 0, null: false
   end
 
 end
