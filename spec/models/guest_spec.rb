@@ -3,5 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Guest, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#redacted' do
+    let(:guest) { create(:guest) }
+
+    it 'only has the allowed fields' do
+      expect(guest.redacted).to eq(
+        'count' => guest.count,
+        'id' => guest.id,
+        'invite_code' => guest.invite_code,
+        'invite_link' => guest.invite_link,
+        'invite_sent' => guest.invite_sent,
+        'name' => guest.name
+      )
+    end
+  end
 end

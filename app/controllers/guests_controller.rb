@@ -5,6 +5,6 @@ class GuestsController < ApplicationController
     guest = Guest.find_by(invite_code: params[:invite_id])
     return render status: :not_found if guest.nil?
 
-    render json: { guest: guest }
+    render json: { guest: guest.redacted }
   end
 end
