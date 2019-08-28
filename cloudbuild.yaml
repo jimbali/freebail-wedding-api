@@ -20,6 +20,7 @@ steps:
   id: Test
   args:
   - 'run'
+  - '--rm'
   - 'runner'
   - 'rspec'
 

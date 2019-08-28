@@ -5,23 +5,119 @@
     "version": "v1"
   },
   "paths": {
-    "/guests": {
+    "/api/guests/{invite_id}": {
       "get": {
-        "summary": "List guests",
+        "summary": "Show guest",
         "tags": [
           "Guests"
         ],
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "invite_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
-            "description": "guests found",
+            "description": "guest found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "guest": {
+                  "name": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "guest not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update guest",
+        "tags": [
+          "Guests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "invite_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "input",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "street": {
+                  "type": "string"
+                },
+                "town": {
+                  "type": "string"
+                },
+                "county": {
+                  "type": "string"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "street",
+                "town",
+                "county",
+                "postcode"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "guest updated"
+          },
+          "404": {
+            "description": "guest not found"
+          },
+          "422": {
+            "description": "invalid request"
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "summary": "Health check",
+        "tags": [
+          "Health"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "health OK",
             "schema": {
               "type": "array",
               "items": {
                 "properties": {
-                  "freebail": {
+                  "health": {
                     "type": "string"
                   }
                 }
