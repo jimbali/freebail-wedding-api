@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   scope 'api' do
     mount Rswag::Api::Engine => '/api-docs'
+    mount Rswag::Ui::Engine => '/api-docs'
 
     get '/guests/:invite_id', to: 'guests#show'
     patch '/guests/:invite_id', to: 'guests#update'
