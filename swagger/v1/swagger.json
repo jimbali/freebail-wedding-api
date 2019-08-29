@@ -28,10 +28,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "guest": {
-                  "name": "string"
+                "name": {
+                  "type": "string"
                 }
-              }
+              },
+              "required": [
+                "name"
+              ]
             }
           },
           "404": {

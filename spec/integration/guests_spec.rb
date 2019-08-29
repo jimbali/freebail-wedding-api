@@ -15,9 +15,9 @@ describe 'Guests API' do
 
         schema type: :object,
                properties: {
-                 guest: { name: :string }
-               }
-
+                 name: { type: :string }
+               },
+               required: ['name']
         run_test!
       end
 
