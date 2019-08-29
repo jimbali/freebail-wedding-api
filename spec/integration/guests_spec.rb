@@ -7,7 +7,7 @@ describe 'Guests API' do
     get 'Show guest' do
       tags 'Guests'
       produces 'application/json'
-      parameter name: :invite_id, in: :path, type: :integer
+      parameter name: :invite_id, in: :path, type: :string
 
       response '200', 'guest found' do
         let!(:guest) { create(:guest) }
@@ -22,7 +22,7 @@ describe 'Guests API' do
       end
 
       response '404', 'guest not found' do
-        let(:invite_id) { 1 }
+        let(:invite_id) { 'boobityboop' }
         run_test!
       end
     end
@@ -30,7 +30,7 @@ describe 'Guests API' do
     patch 'Update guest' do
       tags 'Guests'
       consumes 'application/json'
-      parameter name: :invite_id, in: :path, type: :integer
+      parameter name: :invite_id, in: :path, type: :string
       parameter name: :input, in: :body, schema: {
         type: :object,
         properties: {

@@ -18,7 +18,7 @@
           {
             "name": "invite_id",
             "in": "path",
-            "type": "integer",
+            "type": "string",
             "required": true
           }
         ],
@@ -51,7 +51,7 @@
           {
             "name": "invite_id",
             "in": "path",
-            "type": "integer",
+            "type": "string",
             "required": true
           },
           {
