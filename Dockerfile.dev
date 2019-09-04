@@ -12,7 +12,7 @@ WORKDIR /app
 ADD Gemfile /app
 ADD Gemfile.lock /app
 RUN gem install bundler
-RUN bundle install --without development test
+RUN bundle install --without production test
 
 COPY . /app
 EXPOSE 3000
