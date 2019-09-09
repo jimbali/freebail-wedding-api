@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
     get '/guests/:invite_id', to: 'guests#show'
     patch '/guests/:invite_id', to: 'guests#update'
+    post '/guests', to: 'guests#create'
 
     get '/health', to: 'health#index'
   end

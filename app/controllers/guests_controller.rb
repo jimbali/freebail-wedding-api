@@ -21,6 +21,18 @@ class GuestsController < ApplicationController
     head :no_content
   end
 
+  def create
+    return head :unprocessable_entity unless params_present?
+
+    return head :locked if Guest.count > 300
+
+    Guest.create!(
+      params.permit(:name, :email, :street, :town, :county, :postcode, :country)
+    )
+
+    render status: :created
+  end
+
   def params_present?
     %i[street town county postcode].all? { |k| params.key? k }
   end

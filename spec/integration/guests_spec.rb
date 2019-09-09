@@ -106,4 +106,70 @@ describe 'Guests API' do
       end
     end
   end
+
+  path '/api/guests' do
+    post 'Create guest' do
+      tags 'Guests'
+      consumes 'application/json'
+      parameter name: :input, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string },
+          email: { type: :string },
+          street: { type: :string },
+          town: { type: :string },
+          county: { type: :string },
+          postcode: { type: :string },
+          country: { type: :string }
+        },
+        required: %w[name email street town county postcode]
+      }
+
+      response '201', 'guest created' do
+        context 'with all fields' do
+          let(:input) do
+            build(:guest).slice(
+              :email, :street, :town, :county, :postcode, :country
+            )
+          end
+
+          run_test!
+
+          it 'creates the guest correctly' do
+            expect(Guest.first.attributes).to include(
+              'name' => input[:name],
+              'email' => input[:email],
+              'street' => input[:street],
+              'town' => input[:town],
+              'county' => input[:county],
+              'postcode' => input[:postcode],
+              'country' => input[:country]
+            )
+          end
+        end
+      end
+
+      response '422', 'invalid request' do
+        let!(:guest) { create(:guest) }
+        let(:input) { { yeah: 'nah' } }
+        run_test!
+      end
+
+      response '423', 'locked' do
+        let!(:guest) { create(:guest) }
+
+        let(:input) do
+          build(:guest).slice(
+            :email, :street, :town, :county, :postcode, :country
+          )
+        end
+
+        before do
+          allow(Guest).to receive(:count).and_return(301)
+        end
+
+        run_test!
+      end
+    end
+  end
 end
