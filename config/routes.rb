@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     post '/guests', to: 'guests#create'
 
     get '/health', to: 'health#index'
+
+    get '/ip', to: 'ip#index'
   end
 end
