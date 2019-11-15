@@ -22,6 +22,18 @@ spec:
       labels:
         app: freebail-wedding-api
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                      - freebail-wedding-api
+                topologyKey: kubernetes.io/hostname
+              weight: 100
       containers:
         - env:
             - name: DATABASE_URL
