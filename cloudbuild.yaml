@@ -11,6 +11,8 @@ steps:
   args:
   - 'run'
   - 'runner'
+  - 'bundle'
+  - 'exec'
   - 'rake'
   - 'db:create'
   - 'db:migrate'
@@ -22,6 +24,8 @@ steps:
   - 'run'
   - '--rm'
   - 'runner'
+  - 'bundle'
+  - 'exec'
   - 'rspec'
 
 # This step builds the container image.
