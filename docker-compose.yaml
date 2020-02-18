@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.dev
-    command: ["rails", "server", "-b", "0.0.0.0"]
+    command: ["bundle", "exec", "bin/rails", "server", "-b", "0.0.0.0"]
     depends_on:
       - db
     entrypoint: ["/app/bin/wait_for", "db:3306", "--"]
