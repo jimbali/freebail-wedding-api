@@ -17,4 +17,4 @@ RUN bundle install --without development test
 COPY . /app
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "bin/rails", "server", "-b", "0.0.0.0"]
