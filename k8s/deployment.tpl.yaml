@@ -41,6 +41,16 @@ spec:
                 secretKeyRef:
                   name: freebail-db-creds
                   key: url
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: freebail-mail-creds
+                  key: password
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: freebail-mail-creds
+                  key: username
             - name: RACK_ENV
               value: production
             - name: RAILS_MASTER_KEY
