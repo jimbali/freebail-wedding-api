@@ -251,6 +251,10 @@ table{
 	line-height: 1.2;
 }
 
+.hero img {
+  max-width: 100%;
+}
+
 
 /*HEADING SECTION*/
 .heading-section{
@@ -481,14 +485,12 @@ ul.social li{
           </td>
 	      </tr><!-- end tr -->
 				<tr>
-          <td valign="middle" class="hero bg_white" style="background-image: url(<%= "#{image_path}/sarah_and_jim.png" %>); background-size: cover; background-position: center center; height: 400px;">
+          <td valign="middle" class="hero bg_white">
           	<div class="overlay"></div>
             <table>
             	<tr>
             		<td>
-            			<div class="text" style="text-align: center;">
-            				<h2 title="Sarah and Jim"></h2>
-            			</div>
+            			<img alt="Sarah and Jim" src="<%= "#{image_path}/sarah_and_jim.png" %>">
             		</td>
             	</tr>
             </table>
